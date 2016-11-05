@@ -9,7 +9,8 @@
                 #:use-foreign-library)
   (:import-from :split-sequence
                 #:split-sequence)
-  (:export #:with-mecab
+  (:export #:make-mecab
+           #:with-mecab
            #:mecab-parse
            #:mecab-parse*))
 (in-package :cl-mecab)
@@ -35,8 +36,11 @@
 
 (defvar *mecab*)
 
+(defun make-mecab (&optional (option ""))
+  (%mecab_new2% option))
+
 (defmacro with-mecab ((&optional (option "")) &body body)
-  `(let ((*mecab* (%mecab_new2% ,option)))
+  `(let ((*mecab* (make-mecab ,option)))
       (unwind-protect
            (progn
              (%mecab_sparse_tostr% *mecab* "") ; avoiding MeCab bug
