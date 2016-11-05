@@ -12,7 +12,7 @@
 
 (defun test-reversibility (sentence)
   (with-mecab ()
-    (is (apply #'concatenate 'string (mapcar #'first (mecab-parse* sentence)))
+    (is (apply #'concatenate 'string (mapcar #'first (parse* sentence)))
         (remove-if (lambda (char) (member char '(#\Space #\IDEOGRAPHIC_SPACE #\Tab #\Newline #\Return)))
                    sentence))))
 

@@ -11,8 +11,8 @@
                 #:split-sequence)
   (:export #:make-mecab
            #:with-mecab
-           #:mecab-parse
-           #:mecab-parse*))
+           #:parse
+           #:parse*))
 (in-package :cl-mecab)
 
 
@@ -47,10 +47,10 @@
              ,@body)
         (%mecab_destroy% *mecab*))))
 
-(defun mecab-parse (text &optional (*mecab* *mecab*))
+(defun parse (text &optional (*mecab* *mecab*))
   (%mecab_sparse_tostr% *mecab* text))
 
-(defun mecab-parse* (text &optional (*mecab* *mecab*))
+(defun parse* (text &optional (*mecab* *mecab*))
   (let* ((parse-result (%mecab_sparse_tostr% *mecab* text))
          (lines (split-sequence #\Newline parse-result)))
 
