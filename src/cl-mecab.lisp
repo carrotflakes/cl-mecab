@@ -10,7 +10,9 @@
   (:import-from :split-sequence
                 #:split-sequence)
   (:export #:make-mecab
+           #:load-tagger
            #:with-mecab
+           #:with-mecab*
            #:parse
            #:parse*))
 (in-package :cl-mecab)
@@ -39,13 +41,21 @@
 (defun make-mecab (&optional (option ""))
   (%mecab_new2% option))
 
+(defun load-tagger (&optional (option ""))
+  (setf *mecab* (make-mecab option)))
+
 (defmacro with-mecab ((&optional (option "")) &body body)
+  `(let ((*mecab* (load-time-value (make-mecab ,option))))
+     (%mecab_sparse_tostr% *mecab* "") ; avoiding MeCab bug
+     nil
+     ,@body))
+
+(defmacro with-mecab* ((&optional (option "")) &body body)
   `(let ((*mecab* (make-mecab ,option)))
-      (unwind-protect
-           (progn
-             (%mecab_sparse_tostr% *mecab* "") ; avoiding MeCab bug
-             ,@body)
-        (%mecab_destroy% *mecab*))))
+     (%mecab_sparse_tostr% *mecab* "") ; avoiding MeCab bug
+     (unwind-protect
+          (progn ,@body)
+       (%mecab_destroy% *mecab*))))
 
 (defun parse (text &optional (*mecab* *mecab*))
   (%mecab_sparse_tostr% *mecab* text))

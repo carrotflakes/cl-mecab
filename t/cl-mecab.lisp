@@ -10,15 +10,34 @@
 (plan nil)
 
 
-(defun test-reversibility (sentence)
+(defun test-parse (sentence)
   (with-mecab ()
-    (is (apply #'concatenate 'string (mapcar #'first (parse* sentence)))
-        (remove-if (lambda (char) (member char '(#\Space #\IDEOGRAPHIC_SPACE #\Tab #\Newline #\Return)))
-                   sentence))))
+    (test-reversibility sentence)))
 
+(defun test-reversibility (sentence)
+  (is (apply #'concatenate 'string (mapcar #'first (parse* sentence)))
+      (remove-if (lambda (char)
+                   (member char '(#\Space #\IDEOGRAPHIC_SPACE #\Tab #\Newline #\Return)))
+                 sentence)))
+
+
+(subtest "Reversibility"
+  (test-parse "こんにちは、cl-mecabのテストです。")
+  (test-parse "")
+  (test-parse " 半角スペースが入ってます")
+  (test-parse "I'm a cat."))
+
+
+(with-mecab ()
+  (test-reversibility "こんにちは、cl-mecabのテストです。"))
+
+
+(with-mecab* ()
+  (test-reversibility "こんにちは、cl-mecabのテストです。"))
+
+
+(load-tagger)
 (test-reversibility "こんにちは、cl-mecabのテストです。")
-(test-reversibility "")
-(test-reversibility " 半角スペースが入ってます")
-(test-reversibility "I'm a cat.")
+
 
 (finalize)
