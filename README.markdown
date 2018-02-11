@@ -1,4 +1,4 @@
-# Cl-Mecab
+# cl-mecab
 
 ## Usage
 
@@ -17,6 +17,8 @@
 ```
 
 ## Installation
+
+Assuming you already installed [MeCab](http://taku910.github.io/mecab/).
 
 ```
 $ ros install carrotflakes/cl-mecab
