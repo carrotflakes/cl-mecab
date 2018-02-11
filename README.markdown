@@ -22,13 +22,33 @@
 $ ros install carrotflakes/cl-mecab
 ```
 
+## APIs
+### `(with-mecab (&optional (option "")) &body body)`
+This macro makes MeCab Tagger and enables function `parse` within the `body`.
+The MeCab Tagger will be made only once while that execution.
+The `option` is taken MeCab Tagger initialization.
+
+### `(with-mecab* (&optional (option "")) &body body)`
+This macro similar to `with-mecab`. but, this creates MeCab Tagger each call.
+
+### `(load-tagger &optional (option ""))`
+This function makes MeCab Tagger on global.
+You can use function `parse` after calling the `load-tagger` only once.
+This is useful for experimental implementations.
+
+### `(parse text)`
+This function parses the text by MeCab Tagger and returns result as a string.
+
+### `(parse* text)`
+This function parses the text by MeCab Tagger and returns result as list seems above example.
+
 ## Author
 
 * carrotflakes (carrotflakes@gmail.com)
 
 ## Copyright
 
-Copyright (c) 2016 carrotflakes (carrotflakes@gmail.com)
+Copyright (c) 2016-2018 carrotflakes (carrotflakes@gmail.com)
 
 ## License
 
