@@ -21,7 +21,7 @@
   :components ((:module "src"
                 :components
                 ((:file "cl-mecab"))))
-  :description ""
+  :description "Interface of MeCab that is a morpheme analyzer"
   :long-description
   #.(with-open-file (stream (merge-pathnames
                              #p"README.markdown"
