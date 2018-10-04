@@ -20,8 +20,8 @@
 
 Assuming you already installed [MeCab](http://taku910.github.io/mecab/).
 
-```
-$ ros install carrotflakes/cl-mecab
+``` lisp
+(ql:quickload :cl-mecab)
 ```
 
 ## APIs
